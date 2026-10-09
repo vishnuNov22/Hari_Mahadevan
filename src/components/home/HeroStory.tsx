@@ -93,16 +93,15 @@ export function HeroStory() {
       ref={section}
       id="hero"
       aria-labelledby="hero-title"
-      className="on-dark relative bg-brick-3 text-ivory lg:motion-safe:h-[340vh]"
+      className="on-dark relative bg-ink text-ivory lg:motion-safe:h-[340vh]"
     >
       <div
         ref={stage}
         className="story-stage relative isolate h-auto min-h-[calc(100svh-72px)] overflow-clip lg:motion-safe:sticky lg:motion-safe:top-[72px] lg:motion-safe:h-[calc(100svh-72px)]"
       >
         {/* terracotta studio backdrop: wall + floor + soft key light */}
-        <div aria-hidden="true" className="absolute inset-0 -z-20 bg-[radial-gradient(ellipse_90%_70%_at_60%_105%,#a94e42_0%,#872e32_45%,#5c1a20_100%)]" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-20 h-[38%] bg-gradient-to-b from-transparent to-[#9f473d]/60" />
-        <div aria-hidden="true" className="grain absolute inset-0 -z-10" />
+        <div aria-hidden="true" className="absolute inset-0 -z-20 bg-ink bg-[radial-gradient(ellipse_70%_60%_at_70%_55%,#2b1114_0%,#1c0a0c_70%)]" />
+                <div aria-hidden="true" className="grain absolute inset-0 -z-10" />
 
         {/* 3D lattice */}
         <div
@@ -191,7 +190,7 @@ export function HeroStory() {
               <Magnetic>
                 <Link
                   href="/contact"
-                  className="inline-flex min-h-13 items-center rounded-full border border-ivory/30 bg-brick-3/40 px-7 py-3.5 text-[0.98rem] font-semibold text-ivory backdrop-blur-md transition-colors hover:border-ivory hover:bg-brick-3/70"
+                  className="inline-flex min-h-13 items-center rounded-full border border-ivory/30 bg-ink/50 px-7 py-3.5 text-[0.98rem] font-semibold text-ivory backdrop-blur-md transition-colors hover:border-ivory hover:bg-ink/80"
                 >
                   Start a conversation
                 </Link>
