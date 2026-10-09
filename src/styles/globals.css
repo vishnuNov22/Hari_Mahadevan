@@ -1,0 +1,275 @@
+@import "tailwindcss";
+@import "./motion.css";
+
+/* ------------------------------------------------------------------
+   Design tokens — "Terracotta & Ice"
+   Studio backdrop: brick / terracotta · Deep sections: oxblood ink
+   Signature light: ice aqua · Rim light: magenta-mauve · Canvas: warm blush porcelain
+------------------------------------------------------------------- */
+:root {
+  --ink: #1c0a0c;
+  --ink-2: #2a0f12;
+  --ink-3: #3d1519;
+  --brick: #872e32;
+  --brick-2: #9f473d;
+  --brick-3: #5c1a20;
+  --ivory: #f6ebe6;
+  --paper: #fbf5f2;
+  --stone: #efe0d9;
+  --muted: #6e5a5a;
+  --muted-on-dark: #c9b2ae;
+  --teal: #8a1f2e;          /* accent for text on light surfaces (deep crimson) */
+  --teal-bright: #a9d6df;   /* signature ice aqua on dark surfaces */
+  --brass: #87517c;         /* mauve rim */
+  --brass-soft: #d3a3c4;
+  --magenta: #e0457b;
+  --v-digital: #a9d6df;
+  --v-events: #f08aa8;
+  --v-property: #e9c39b;
+  --v-financial: #9fdcc6;
+  --line: rgba(28, 10, 12, 0.13);
+  --line-on-dark: rgba(246, 235, 230, 0.15);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur-base: 280ms;
+  --dur-slow: 700ms;
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ivory: var(--ivory);
+  --color-paper: var(--paper);
+  --color-stone: var(--stone);
+  --color-muted: var(--muted);
+  --color-muted-dark: var(--muted-on-dark);
+  --color-teal: var(--teal);
+  --color-teal-bright: var(--teal-bright);
+  --color-brass: var(--brass);
+  --color-brass-soft: var(--brass-soft);
+  --color-line: var(--line);
+  --color-line-dark: var(--line-on-dark);
+  --color-brick: var(--brick);
+  --color-brick-2: var(--brick-2);
+  --color-brick-3: var(--brick-3);
+  --color-magenta: var(--magenta);
+  --color-v-digital: var(--v-digital);
+  --color-v-events: var(--v-events);
+  --color-v-property: var(--v-property);
+  --color-v-financial: var(--v-financial);
+
+  --font-display: var(--font-display-family), "Georgia", serif;
+  --font-sans: var(--font-sans-family), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans-family), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--teal);
+    color: var(--ivory);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  .on-dark :focus-visible,
+  .on-dark:focus-visible {
+    outline-color: var(--teal-bright);
+  }
+
+  .on-teal :focus-visible {
+    outline-color: var(--ivory);
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  /* The display face has no italic: never fake one — emphasis is carried by colour. */
+  .font-display,
+  .display-xl,
+  .display-lg,
+  .display-md {
+    font-synthesis: none;
+    font-optical-sizing: auto;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+}
+
+@layer components {
+  /* Small uppercase metadata label */
+  .eyebrow {
+    font-family: var(--font-sans-family), ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .display-xl {
+    font-family: var(--font-display-family), Georgia, serif;
+    font-weight: 600;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-size: clamp(3.1rem, 11vw, 9.5rem);
+  }
+
+  .display-hero {
+    font-family: var(--font-display-family), Georgia, serif;
+    font-weight: 600;
+    line-height: 0.92;
+    letter-spacing: -0.045em;
+    font-size: clamp(3.2rem, 16vw, 4.4rem);
+  }
+
+  @media (min-width: 640px) {
+    .display-hero {
+      font-size: clamp(4.4rem, 8.2vw, 7.6rem);
+    }
+  }
+
+  .display-lg {
+    font-family: var(--font-display-family), Georgia, serif;
+    font-weight: 600;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    font-size: clamp(2.4rem, 6.4vw, 5.6rem);
+  }
+
+  .display-md {
+    font-family: var(--font-display-family), Georgia, serif;
+    font-weight: 550;
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    font-size: clamp(1.9rem, 4vw, 3.4rem);
+  }
+
+  .lede {
+    font-size: clamp(1.08rem, 1.5vw, 1.3rem);
+    line-height: 1.6;
+  }
+
+  .rule {
+    height: 1px;
+    background: var(--line);
+  }
+
+  .on-dark .rule {
+    background: var(--line-on-dark);
+  }
+
+  /* Subtle film grain for dark cinematic sections (static, cheap). */
+  .grain {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.07;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Animated underline for text links */
+  .link-underline {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size var(--dur-base) var(--ease-out);
+  }
+
+  .link-underline:hover,
+  .link-underline:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* Hero load choreography — CSS only, so the hero is server-rendered and instant. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 28px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes settle {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.anim-rise {
+  animation: rise var(--dur-slow) var(--ease-out) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+.anim-settle {
+  animation: settle 1600ms var(--ease-out) both;
+}
+
+.anim-draw {
+  transform-origin: left center;
+  animation: draw 1100ms var(--ease-out) both;
+  animation-delay: var(--delay, 0ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
