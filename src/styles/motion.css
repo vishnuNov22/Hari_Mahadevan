@@ -1,0 +1,265 @@
+@layer components {
+  /* ---------- kinetic / split text ---------- */
+  .kt-mask {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.08em;
+    margin-bottom: -0.08em;
+  }
+
+  .kt-unit {
+    display: inline-block;
+    transform-origin: 0 100%;
+    animation: kt-rise 1100ms var(--ease-out) both;
+    animation-delay: calc(var(--kt-base, 0ms) + var(--i, 0) * var(--kt-step, 60ms));
+  }
+
+  @keyframes kt-rise {
+    from {
+      transform: translate3d(0, 108%, 0) rotate(5deg);
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  /* ---------- clip-path reveal ----------
+     The observed wrapper is never clipped (IntersectionObserver ignores
+     fully clipped targets); the inner layer carries the mask. */
+  .clip-reveal > .clip-inner {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(0 0 100% 0 round var(--clip-r, 0px));
+    transition: clip-path 1200ms var(--ease-in-out);
+  }
+
+  .clip-reveal > .clip-inner > * {
+    transform: scale(1.12);
+    transition: transform 1600ms var(--ease-out);
+  }
+
+  .clip-reveal.is-in > .clip-inner {
+    clip-path: inset(0 0 0 0 round var(--clip-r, 0px));
+  }
+
+  .clip-reveal.is-in > .clip-inner > * {
+    transform: none;
+  }
+
+  /* ---------- staggered fade-up for small groups ---------- */
+  .st-in {
+    animation: st-up 900ms var(--ease-out) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes st-up {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 18px, 0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* ---------- magnetic buttons ---------- */
+  .magnetic {
+    display: inline-flex;
+    transform: translate3d(var(--mx, 0px), var(--my, 0px), 0);
+    transition: transform 400ms var(--ease-out);
+  }
+
+  /* ---------- hero motif fallback (static, no WebGL needed) ---------- */
+  .orb-fallback {
+    background:
+      radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.55), transparent 22%),
+      radial-gradient(circle at 70% 65%, rgba(143, 155, 255, 0.55), transparent 45%),
+      radial-gradient(circle at 30% 75%, rgba(255, 143, 107, 0.35), transparent 40%),
+      radial-gradient(circle at 50% 50%, #1b2236 0%, #0f1424 70%);
+    box-shadow:
+      inset 0 0 40px rgba(143, 155, 255, 0.35),
+      0 0 120px rgba(143, 155, 255, 0.18);
+    border-radius: 50%;
+    transition: opacity 900ms var(--ease-out);
+  }
+
+  .hero-canvas {
+    opacity: 0;
+    transition: opacity 1200ms var(--ease-out);
+  }
+
+  .hero-canvas.is-ready {
+    opacity: 1;
+  }
+
+  /* ---------- four-chapter scrollytelling ---------- */
+  .chapters-pin .ch-text {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition: opacity 600ms var(--ease-out), transform 700ms var(--ease-out);
+    pointer-events: none;
+  }
+
+  .chapters-pin .ch-text.is-active {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .chapters-pin .ch-panel {
+    position: absolute;
+    inset: 0;
+    clip-path: inset(100% 0 0 0 round 28px);
+    transition: clip-path 1000ms var(--ease-in-out);
+  }
+
+  .chapters-pin .ch-panel.is-past,
+  .chapters-pin .ch-panel.is-active {
+    clip-path: inset(0 0 0 0 round 28px);
+  }
+
+  .chapters-pin .ch-panel .ch-art {
+    transform: scale(calc(1.15 - var(--local, 0) * 0.15));
+    transition: transform 200ms linear;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kt-unit,
+  .st-in {
+    animation: none !important;
+  }
+
+  .clip-reveal > .clip-inner,
+  .clip-reveal > .clip-inner > * {
+    clip-path: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .magnetic {
+    transform: none !important;
+  }
+}
+
+@layer components {
+  [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 24px, 0);
+    transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out);
+    transition-delay: var(--rv-d, 0ms);
+  }
+
+  [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+@layer components {
+  /* perspective text entrance: letters swing up out of the floor */
+  .kt-3d {
+    perspective: 900px;
+  }
+
+  .kt-3d .kt-mask {
+    overflow: visible;
+  }
+
+  .kt-3d .kt-unit {
+    transform-origin: 50% 100% -0.3em;
+    animation-name: kt-swing;
+    animation-duration: 1300ms;
+  }
+
+  @keyframes kt-swing {
+    from {
+      opacity: 0;
+      transform: translate3d(0, 40%, 0) rotateX(-95deg);
+      filter: blur(6px);
+    }
+    60% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* variable-font animation: weight settles from hairline to semibold */
+  .kt-weight {
+    animation: kt-weight 2200ms var(--ease-out) 300ms both;
+  }
+
+  @keyframes kt-weight {
+    from {
+      font-weight: 150;
+      letter-spacing: 0.02em;
+    }
+    to {
+      font-weight: 620;
+      letter-spacing: -0.065em;
+    }
+  }
+
+  /* animated letter spacing for small caps labels */
+  .kt-track {
+    animation: kt-track 1600ms var(--ease-out) both;
+    animation-delay: var(--d, 0ms);
+  }
+
+  @keyframes kt-track {
+    from {
+      opacity: 0;
+      letter-spacing: 0.6em;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* typography parallax, driven by --sy from <ScrollVars> */
+  .px-up {
+    transform: translate3d(0, calc(var(--sy, 0) * -0.18px), 0);
+  }
+
+  .px-side {
+    transform: translate3d(calc(var(--sy, 0) * 0.12px), calc(var(--sy, 0) * -0.06px), 0);
+  }
+
+  .px-fast {
+    transform: translate3d(0, calc(var(--sy, 0) * -0.32px), 0);
+  }
+
+  .px-down {
+    transform: translate3d(0, calc(var(--sy, 0) * 0.22px), 0) scale(calc(1 + var(--sp, 0) * 0.15));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kt-weight,
+  .kt-track {
+    animation: none !important;
+  }
+
+  .px-up,
+  .px-side,
+  .px-fast,
+  .px-down {
+    transform: none !important;
+  }
+}
